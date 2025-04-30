@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=80.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "text_categorizer"
+version = "0.1.0"
+description = "Tool for categorising unstructured text using ollama models"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "httpx>=0.28.1",                # API requests to ollama
+    "pydantic>=2.11.4",             # For data validation
+    "pandas>=2.2.3",                # Data structures for analysis
+    "openpyxl>=3.1.5",              # Read/write Excel 2010 xlsx/xlsm
+    "typer>=0.15.3",                # CLI interface
+    "rich>=14.0.0",                 # Rich render for the terminal
+]
+
+[project.optional-dependencies]
+dev = [
+    "pynvim>=0.5.2",                # Python client for Neovim
+    "jedi-language-server>=0.43.1", # Language server
+    "ruff>=0.9.3",                  # Python linter and code formatter
+    "pyright>=v1.1.398",            # CLI wrapper for pyright 
+    "ipython>=8.31.0",              # REPL 
+    "plotext>=5.3.2",               # plot directly on terminal
+    "ipdb>=0.13.13",                # IPython-enabled pdb
+    "marimo>=0.11.25",              # Make reactive notebooks and apps
+]
+
+[project.scripts]
+categorize = "text_categorizer.cli:main"
+
+[tool.ruff]
+line-length = 90 
+target-version = "py313"
+lint.select = ["I", "N", "UP"]
+        # `I`: isort
+        # `N`: pep8-naming
+        # `UP`: pyupgrade
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+
+[tool.marimo.runtime]
+pythonpath = ["eval_qual_data_hackathon/src"]
